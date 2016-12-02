@@ -1,4 +1,5 @@
-import {Component, createElement} from './arse'
+import * as createElement from './createElement'
+import * as Component from './component'
 const test = require('tap').test
 
 class Test extends Component {
@@ -46,23 +47,6 @@ class SubTestList extends Component {
 }
 
 const giantTestExpectation = {type: 'div', props: {class: 'test'}, children: [{type: 'ul', props: null, children: [{type: 'li', props: null, children: [{type: 'textNode', props: {text: 'item 1'}, children: []}]}, {type: 'li', props: null, children: [{type: 'textNode', props: {text: 'item 2'}, children: []}]}, {type: 'li', props: null, children: [{type: 'textNode', props: {text: 'item 3'}, children: []}]}, {type: 'ul', props: null, children: [{type: 'li', props: null, children: [{type: 'textNode', props: {text: 'Auto generated'}, children: []}]}, {type: 'li', props: null, children: [{type: 'textNode', props: {text: 'Auto generated'}, children: []}]}, {type: 'li', props: null, children: [{type: 'textNode', props: {text: 'Auto generated'}, children: []}]}, {type: 'li', props: null, children: [{type: 'textNode', props: {text: 'Auto generated'}, children: []}]}, {type: 'li', props: null, children: [{type: 'textNode', props: {text: 'Auto generated'}, children: []}]}, {type: 'li', props: null, children: [{type: 'textNode', props: {text: 'Auto generated'}, children: []}]}]}]}, {type: 'div', props: {class: 'test'}, children: [{type: 'textNode', props: {text: 'testing'}, children: []}, {type: 'p', props: null, children: [{type: 'textNode', props: {text: 'p test'}, children: []}]}, {type: 'textNode', props: {text: 'textNodes'}, children: []}]}, {type: 'form', props: {action: '/test', method: 'POST'}, children: [{type: 'input', props: {placeholder: 'random input'}, children: []}, {type: 'input', props: {placeholder: 'more random input'}, children: []}]}]}
-
-test('Component test', (t) => {
-  const defaultMsg = (msg) => 'Default: ' + msg
-  const testMsg = (msg) => 'Test: ' + msg
-
-  const prop = {test: 'some test data'}
-  const defaultComponent = new Component(prop)
-  const testComponent = new Test(prop)
-
-  const propMatch = 'Passed props match component props'
-  t.deepEqual(prop, defaultComponent.props, defaultMsg(propMatch))
-  t.deepEqual(prop, testComponent.props, testMsg(propMatch))
-
-  t.equal(undefined, defaultComponent.render(), defaultMsg('render should return undefined'))
-
-  t.end()
-})
 
 test('Element creation test', (t) => {
   const els = [

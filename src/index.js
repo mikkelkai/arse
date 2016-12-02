@@ -1,1 +1,2 @@
-export * from './arse'
+export * from './component'
+export * from './createElement'

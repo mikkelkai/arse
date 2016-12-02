@@ -1,14 +1,3 @@
-export class Component {
-  constructor (props) {
-    this.props = props
-    this.ctx = {}
-  }
-
-  render () {
-    return
-  }
-}
-
 export function createElement (type, props, ...children) {
   if (typeof type === 'function') {
     const newProps = props || {}
