@@ -1,2 +1,2 @@
-export * from './component'
-export * from './createElement'
+export * from './unversal/component'
+export * from './universal/createElement'
