@@ -1,5 +1,5 @@
-import * as createElement from './createElement'
-import * as Component from './component'
+import createElement from './createElement'
+import Component from './component'
 const test = require('tap').test
 
 class Test extends Component {

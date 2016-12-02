@@ -1,4 +1,5 @@
-import {Component, createElement} from './arse'
+import Component from './component'
+import createElement from './createElement'
 const test = require('tap').test
 
 class Test extends Component {
