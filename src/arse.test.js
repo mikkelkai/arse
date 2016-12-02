@@ -1,5 +1,5 @@
 import {Component, createElement} from './arse'
-import test from 'tape'
+const test = require('tap').test
 
 class Test extends Component {
   render () {
