@@ -13,6 +13,10 @@ export default function render (Component, mountNode, state, reducer) {
 
   let _state = state || {}
 
+  const _getState = () => {
+    return _state
+  }
+
   const _component = new Component(_state)
   const _mountNode = mountNode
 
@@ -24,8 +28,8 @@ export default function render (Component, mountNode, state, reducer) {
   const _render = () => {
     _component.props = _state
     _tree = _component.render()
-    _rootNode = renderElement(_tree)
-    _mountNode.appendChild(_rootNode)
+    removeChildren(_rootNode)
+    appendChildren(_rootNode, renderElement(_tree).childNodes)
   }
 
   const _dispatch = (action) => {
@@ -33,8 +37,12 @@ export default function render (Component, mountNode, state, reducer) {
     _render()
   }
 
-  if (!reducerExist) return
-  return _dispatch
+  if (typeof state === 'undefined') return
+  if (!reducerExist) return {getState: _getState}
+  return {
+    dispatch: _dispatch,
+    getState: _getState
+  }
 }
 
 function renderElement (tree) {
@@ -42,41 +50,27 @@ function renderElement (tree) {
 
   const el = document.createElement(tree.type)
 
-  if (typeof tree.props === 'object') {
-    Object.keys(tree.props).map(key => {
+  if (tree.props !== null && typeof tree.props === 'object') {
+    Object.getOwnPropertyNames(tree.props).map(key => {
       el.setAttribute(key, tree.props[key])
     })
   }
 
-  tree.children.forEach(child => renderElement(child))
+  tree.children.forEach(child => {
+    el.appendChild(renderElement(child))
+  })
 
   return el
 }
 
-// Entertaining an idea
-/* const SET_PROP = 'SET_PROP'
-const REMOVE_PROP = 'REMOVE_PROP'
-
-function compareProps (oldTree, newTree) {
-  let allKeys = new Set(Object.keys(oldTree.props).concat(Object.keys(newTree.props)))
-
-  let patches = []
-
-  allKeys.forEach(key => {
-    const patch = handleProp(key, oldTree.props[key], newTree.props[key])
-    if (patch !== undefined) patches.push(patch)
+function removeChildren (node) {
+  Array.prototype.slice.call(node.childNodes).forEach(child => {
+    node.removeChild(child)
   })
-
-  return patches
 }
 
-function handleProp (key, oldProp, newProp) {
-  switch (true) {
-    case newProp === undefined:
-      return {type: REMOVE_PROP, key: key}
-    case oldProp === undefined || newProp !== oldProp:
-      return {type: SET_PROP, key: key, prop: newProp}
-    default:
-      return undefined
-  }
-} */
+function appendChildren (node, children) {
+  Array.prototype.slice.call(children).forEach(child => {
+    node.appendChild(child)
+  })
+}

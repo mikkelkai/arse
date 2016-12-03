@@ -15,7 +15,8 @@
     "prebuild": "npm run clean && npm run init",
     "build": "babel src -d lib",
     "pretest": "npm run build",
-    "test": "tap ./lib/**/*.test.js --cov --coverage-report=lcov"
+    "test": "tap ./lib/**/*.test.js -R spec --cov --coverage-report=lcov",
+    "test:no-cov": "tap ./lib/**/*.test.js"
   },
   "author": "mikkelkai <mikkelkai@gmail.com>",
   "license": "MIT",
